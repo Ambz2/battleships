@@ -16,7 +16,7 @@ beforeEach(() => {
 });
 
 test('player can fire shot at computer', () => {
-  player1.receiveAttack([2, 2]);
+  player1.receiveAttack([1, 1]);
   expect(player1.gameboard.board[0].shipObject.shipArray)
     .toMatchObject([1, 0]);
 });
