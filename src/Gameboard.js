@@ -32,7 +32,6 @@ const GameboardFactory = (name) => {
     const arr = obj.board.map((element) => element.shipObject.sunk);
     if (arr.every((element) => element === true)) {
       obj.allShipsSunk = true;
-      console.log('All ships sunk!');
     }
   };
   const addToDoneArray = (coords) => {
