@@ -8,11 +8,11 @@ class Grid {
     this.element.setAttribute('id', id);
 
     this.addBoxes();
-    this.type = name
+    this.type = name;
     this.player = Player(name);
 
-    this.children = Array.from(this.element.children)
-    this.missedAttacks = this.player.gameboard.missedAttacks
+    this.children = Array.from(this.element.children);
+    this.missedAttacks = this.player.gameboard.missedAttacks;
   }
 
   createArrayOfAllShipCoordinates() {
@@ -32,7 +32,7 @@ class Grid {
   }
 
   loadShips() {
-    const allCoordinates = this.createArrayOfAllShipCoordinates()
+    const allCoordinates = this.createArrayOfAllShipCoordinates();
     for (let k = 0; k < this.element.children.length; k++) {
       for (let l = 0; l < allCoordinates.length; l++) {
         if (this.checkIfCoordinateInAllShipCoordinates(allCoordinates, k, l)) {
@@ -42,20 +42,18 @@ class Grid {
     }
   }
 
-
   updateDisplay(coordinate) {
     /// check if in all coordinates array
-    let allCoordinates = this.createArrayOfAllShipCoordinates();
-    for (let i= 0; i < this.missedAttacks.length; i++) {
+    const allCoordinates = this.createArrayOfAllShipCoordinates();
+    for (let i = 0; i < this.missedAttacks.length; i++) {
       if (coordinate === this.missedAttacks[i]) {
-        let box = this.children.find(x => x.dataset.coordinates === coordinate.toString());
-        box.classList.add('missedAttack')
-        return
-      } 
+        const box = this.children.find((x) => x.dataset.coordinates === coordinate.toString());
+        box.classList.add('missedAttack');
+        return;
+      }
     }
-    let box = this.children.find(x => x.dataset.coordinates === coordinate.toString());
-    box.classList.add('successfulAttack')
-    
+    const box = this.children.find((x) => x.dataset.coordinates === coordinate.toString());
+    box.classList.add('successfulAttack');
   }
 
   addBoxes() {
@@ -68,25 +66,23 @@ class Grid {
   }
 
   handleShipPlacement(size, startcoordinates) {
-    console.log(Number(startcoordinates[1]) + Number(size))
+    console.log(Number(startcoordinates[1]) + Number(size));
     if (Number(startcoordinates[1]) + Number(size < 9)) {
       const coordinates = [];
       for (let i = 0; i < size; i++) {
-        coordinates.push([startcoordinates[0], startcoordinates[1] + i])
+        coordinates.push([startcoordinates[0], startcoordinates[1] + i]);
       }
       this.player.gameboard.placeShip(size, coordinates);
       this.loadShips();
-    } else console.log("Won't fit!")
-    
+    } else console.log("Won't fit!");
   }
-  
+
   checkIfExceedsBoundaries(size, startcoordinates) {
     if (startcoordinates[1] + size > 9) {
-      handleError()
-      return false
-    } else {
-      return true
+      handleError();
+      return false;
     }
+    return true;
   }
 }
 
