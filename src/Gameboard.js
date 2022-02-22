@@ -8,7 +8,6 @@ const GameboardFactory = (name) => {
     element.shipObject = Ship(size, coordinates);
     obj.board.push(element);
     obj.coordinatesArray.push(coordinates);
-    console.log(obj.coordinatesArray)
   };
   // translateCoords takes a set of coordinates, and return the index in coordinatesArray,
   // which can then be used by receive attack to find the correct ship object in the board array.
