@@ -66,23 +66,54 @@ class Grid {
   }
 
   handleShipPlacement(size, startcoordinates) {
-    console.log(Number(startcoordinates[1]) + Number(size));
     if (Number(startcoordinates[1]) + Number(size < 9)) {
-      const coordinates = [];
-      for (let i = 0; i < size; i++) {
-        coordinates.push([startcoordinates[0], startcoordinates[1] + i]);
-      }
+      const coordinates = this.createArrayofCoordinatesForNewShip(startcoordinates, size);
       this.player.gameboard.placeShip(size, coordinates);
       this.loadShips();
     } else console.log("Won't fit!");
   }
 
-  checkIfExceedsBoundaries(size, startcoordinates) {
-    if (startcoordinates[1] + size > 9) {
-      handleError();
-      return false;
+  createArrayofCoordinatesForNewShip(startcoordinates, size) {
+    const coordinates = [];
+    for (let i = 0; i < size; i++) {
+      coordinates.push([startcoordinates[0], startcoordinates[1] + i]);
     }
-    return true;
+
+    return coordinates;
+  }
+
+  checkIfExistsAlready(coordinates, allShipCoordinates) {
+    for (let c of coordinates) {
+      if (allShipCoordinates.find((x) => x.toString() == c.toString())) {
+        return true
+      }
+    }
+  };
+
+  generateAIShips() {
+    const fleet = [2, 3, 3, 4, 5];
+    for (const f of fleet) {
+      let validPlacement = undefined
+      while (!validPlacement) {
+        const coordinate = this.roll()
+        let doesNotExceed9 = undefined;
+        if (coordinate[1] + f < 9) { doesNotExceed9 = true }
+        const newShipArray = this.createArrayofCoordinatesForNewShip(coordinate, f)
+        const doesNotExistAlready = this.checkIfExistsAlready(newShipArray, this.createArrayOfAllShipCoordinates())
+        console.log(newShipArray)
+        if (!doesNotExistAlready && doesNotExceed9) {
+          this.player.gameboard.placeShip(f, newShipArray);
+          validPlacement = true
+        }
+      }
+    }
+    this.loadShips()
+  }
+
+  roll() {
+    const yCoordinate = Math.floor(Math.random() * 10);
+    const xCoordinate = Math.floor(Math.random() * 10);
+    return [yCoordinate, xCoordinate];
   }
 }
 

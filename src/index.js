@@ -22,6 +22,7 @@ manageDOM.handleDrag(playerGrid)
 content.appendChild(playerGrid.element);
 content.appendChild(computerGrid.element);
 playerGrid.loadShips();
+computerGrid.generateAIShips();
 
 
 function takeFire(event) {
