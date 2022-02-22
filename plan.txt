@@ -1,0 +1,20 @@
+Battleship Game:
+
+We want to create a battleship game, where players will take turns firing at one another. The player will only be able to see where their own ships are, not the computers. So, we want to create game logic. 
+
+1. Press button so that the game loop begins. 
+2. While: (not all ships are not sunk) we want the game to run. 
+
+We want to add event listeners to all the tiles. As long as it is that players turn (achieved using the modulo operator) and the valid value is equal to true. The event will fire, taking the coordinates, and firing receive attack on that players board.
+
+Then, when the game is won it will print to the console that the game is over, as all ships have not been sunk.
+
+Take Fire function:
+1. check if it is that players turn to be fired upon -- check
+2. check if the move is valid --check
+3. if the move is valid, we want to take the coordinates of that box , and send a receive attack with those coordinates. 
+Then, we will set that to not a valid move. 
+then, we want to update the display
+4. update display will update whether it is a hit or a miss, which can be achieved by checking if it is in the coordinates array or not,
+5. it will then check if all ships have been destroyed and it's gmae over, 
+6. if not, it will then change the turn variable, else it will console.log(game over!)

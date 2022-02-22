@@ -14,7 +14,7 @@ const ShipFactory = (size, coordinates) => {
     }
   }
   const hit = (coords) => {
-    let index = searchCoordinatesPosition(coords);
+    const index = searchCoordinatesPosition(coords);
     obj.shipArray[index] = 1;
     isSunk();
   };

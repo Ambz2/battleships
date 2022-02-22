@@ -43,7 +43,6 @@ test('Receive missed attack', () => {
   expect(player1.missedAttacks[0]).toMatchObject([7, 8]);
 });
 
-
 test('Gameboard reports if all ships are sunk', () => {
   let player1 = Gameboard('Player 1');
   player1.placeShip(2, [[1, 2], [1, 3]]);
@@ -53,3 +52,15 @@ test('Gameboard reports if all ships are sunk', () => {
   player1.receiveAttack([1, 5]);
   expect(player1.allShipsSunk).toEqual(true);
 });
+
+test('received attack added to doneMoves array', () => {
+  let player1 = Gameboard('player 1');
+  player1.receiveAttack([1, 2]);
+  expect(player1.doneCoords[0]).toMatchObject([1, 2]);
+});
+
+test('move is deleted from notDoneMoves Array', () => {
+  let player1 = Gameboard('player1');
+  player1.receiveAttack([0, 6]);
+  expect(player1.notDoneCoords[6]).toMatchObject([0, 7]);
+})

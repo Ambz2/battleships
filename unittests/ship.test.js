@@ -13,4 +13,4 @@ test('is sunk function works', () => {
   ship.hit([1, 1]);
   ship.hit([1, 2]);
   expect(ship.sunk).toEqual(true);
-})
+});
