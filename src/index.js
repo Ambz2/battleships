@@ -38,9 +38,17 @@ function takeFire(event) {
 }
 
 function takeComputerTurn() {
-  const coordinates = playerGrid.player.receiveRandomAttack();
-  playerGrid.updateDisplay(coordinates);
-  checkIfGameOver(playerGrid);
+  const firedAttacks = playerGrid.player.firedAttacks
+  console.log(firedAttacks)
+  if (firedAttacks[0] == undefined || firedAttacks[firedAttacks.length - 1].hit == false) {
+    const coordinates = playerGrid.player.receiveRandomAttack();
+    playerGrid.updateDisplay(coordinates);
+    checkIfGameOver(playerGrid);
+  } else {
+    const coordinates = playerGrid.player.targetedAttack()
+    playerGrid.updateDisplay(coordinates);
+    checkIfGameOver(playerGrid);
+  }
 }
 
 function checkIfGameOver(player) {

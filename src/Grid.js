@@ -100,14 +100,13 @@ class Grid {
         if (coordinate[1] + f < 9) { doesNotExceed9 = true }
         const newShipArray = this.createArrayofCoordinatesForNewShip(coordinate, f)
         const doesNotExistAlready = this.checkIfExistsAlready(newShipArray, this.createArrayOfAllShipCoordinates())
-        console.log(newShipArray)
         if (!doesNotExistAlready && doesNotExceed9) {
           this.player.gameboard.placeShip(f, newShipArray);
           validPlacement = true
         }
       }
     }
-    this.loadShips()
+    this.loadShips();
   }
 
   roll() {

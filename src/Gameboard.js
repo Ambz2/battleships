@@ -21,9 +21,7 @@ const GameboardFactory = (name) => {
     }
   };
   const missedAttacks = [];
-  const addToReceivedAttacks = (coords) => {
-    obj.receivedAttacks.push(coords);
-  };
+
   const addToMissedAttacks = (coords) => {
     obj.missedAttacks.push(coords);
   };
@@ -44,15 +42,19 @@ const GameboardFactory = (name) => {
     }
   }
   const receiveAttack = (coordinates) => {
+    console.log(coordinates)
     const index = translateCoords(coordinates);
+    addToDoneArray(coordinates);
+    deleteFromNotDoneArray(coordinates);
     if (index === undefined) {
       addToMissedAttacks(coordinates);
+      return { hit: false, coords: coordinates}
     } else {
       obj.board[index].shipObject.hit(coordinates);
       checkIfAllShipsSunk();
+      return { hit: true, coords: coordinates }
     }
-    addToDoneArray(coordinates);
-    deleteFromNotDoneArray(coordinates);
+    
   };
   const allShipsSunk = false;
 

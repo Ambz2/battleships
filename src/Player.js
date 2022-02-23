@@ -1,10 +1,10 @@
 import Gameboard from './Gameboard.js';
-
+import compare from './helper.js'
 const Player = (name) => {
   const gameboard = Gameboard(name);
 
   const receiveAttack = (coordinates) => {
-    obj.gameboard.receiveAttack(coordinates);
+    return obj.gameboard.receiveAttack(coordinates).coords;
   };
 
   // need to work on random attacks
@@ -18,14 +18,41 @@ const Player = (name) => {
   };
   const receiveRandomAttack = () => {
     const roll = obj.roll();
-    console.log(roll.coordinates)
-    obj.gameboard.receiveAttack(roll.coordinates);
+    const attack = obj.gameboard.receiveAttack(roll.coordinates);
     const playedMove = obj.gameboard.notDoneCoords.splice(roll.move, 0);
     obj.gameboard.doneCoords.push(playedMove);
+    obj.firedAttacks.push(attack);
     return roll.coordinates;
   };
+
+  const targetedAttack = () => {
+    const lastAttack = obj.firedAttacks[firedAttacks.length - 1].coords;
+    const leftSideOfLastAttack = [lastAttack[0], lastAttack[1] - 1];
+    const rightSideOfLastAttack = [lastAttack[0], lastAttack[1] + 1];
+    if (checkIfInDoneMoves(leftSideOfLastAttack)) {
+      console.log('leftside')
+      receiveAttack(leftSideOfLastAttack);
+      return leftSideOfLastAttack
+    } else if (checkIfInDoneMoves(rightSideOfLastAttack)) {
+      receiveAttack(rightSideOfLastAttack);
+      return rightSideOfLastAttack
+    } else {
+      let coords = receiveRandomAttack()
+      return coords
+    }
+   
+  }
+
+  const checkIfInDoneMoves = (coordinates) =>  {
+    for (let c of gameboard.notDoneCoords) {
+      if (compare(c, coordinates)) {
+        return true
+      }
+    }
+  }
+  const firedAttacks = [];
   const obj = {
-    gameboard, receiveAttack, roll, receiveRandomAttack,
+    gameboard, receiveAttack, roll, receiveRandomAttack, firedAttacks, targetedAttack,
   };
   return obj;
 };
