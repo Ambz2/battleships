@@ -30,7 +30,6 @@ const Player = (name) => {
     const leftSideOfLastAttack = [lastAttack[0], lastAttack[1] - 1];
     const rightSideOfLastAttack = [lastAttack[0], lastAttack[1] + 1];
     if (checkIfInDoneMoves(leftSideOfLastAttack)) {
-      console.log('leftside')
       receiveAttack(leftSideOfLastAttack);
       return leftSideOfLastAttack
     } else if (checkIfInDoneMoves(rightSideOfLastAttack)) {
@@ -51,8 +50,9 @@ const Player = (name) => {
     }
   }
   const firedAttacks = [];
+
   const obj = {
-    gameboard, receiveAttack, roll, receiveRandomAttack, firedAttacks, targetedAttack,
+    name, gameboard, receiveAttack, roll, receiveRandomAttack, firedAttacks, targetedAttack,
   };
   return obj;
 };

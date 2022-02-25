@@ -15,6 +15,13 @@ class Grid {
     this.missedAttacks = this.player.gameboard.missedAttacks;
   }
 
+  checkIfAllShipsPlaced() {
+    if (this.player.gameboard.board.length === 5) {
+      return true
+    }
+    return false
+  }
+
   createArrayOfAllShipCoordinates() {
     const allCoordinates = [];
     for (let i = 0; i < this.player.gameboard.coordinatesArray.length; i++) {
@@ -66,10 +73,11 @@ class Grid {
   }
 
   handleShipPlacement(size, startcoordinates) {
-    if (Number(startcoordinates[1]) + Number(size < 9)) {
+    if (Number(startcoordinates[1]) + Number(size - 1) <= 9) {
       const coordinates = this.createArrayofCoordinatesForNewShip(startcoordinates, size);
       this.player.gameboard.placeShip(size, coordinates);
       this.loadShips();
+      return true
     } else console.log("Won't fit!");
   }
 
@@ -113,6 +121,10 @@ class Grid {
     const yCoordinate = Math.floor(Math.random() * 10);
     const xCoordinate = Math.floor(Math.random() * 10);
     return [yCoordinate, xCoordinate];
+  }
+
+  reset() {
+    this.player.resetGameboard();
   }
 }
 

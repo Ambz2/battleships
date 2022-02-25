@@ -5,16 +5,16 @@ import * as manageDOM from './manageDOM.js';
 import Grid from './Grid.js';
 import css from './style.css';
 import GameOverScreen from './gameOver.js'
-import shipcontainer from './ship-container.js'
+import ShipContainer from './ship-container.js'
 let turn = 1;
 
 const content = document.querySelector('.content');
-const shipContainer = new shipcontainer()
+let shipContainer = new ShipContainer();
 document.querySelector('body').appendChild(shipContainer.element);
 
 
-const playerGrid = new Grid('player', 'player', takeFire);
-const computerGrid = new Grid('computer', 'computer', takeFire);
+let playerGrid = new Grid('player', 'player', takeFire);
+let computerGrid = new Grid('computer', 'computer', takeFire);
 computerGrid.children.forEach((child) => child.addEventListener('click', (event) => { takeFire(event); }));
 manageDOM.handleDrag(playerGrid)
 
@@ -23,10 +23,11 @@ content.appendChild(playerGrid.element);
 content.appendChild(computerGrid.element);
 playerGrid.loadShips();
 computerGrid.generateAIShips();
-
+const resetButton = document.querySelector('#reset');
+resetButton.addEventListener('click', restart)
 
 function takeFire(event) {
-  if (event.target.dataset.valid === 'true') {
+  if (event.target.dataset.valid === 'true' && playerGrid.checkIfAllShipsPlaced()) {
     turn += 1;
     event.target.dataset.valid = 'false';
     let coordinates = event.target.dataset.coordinates
@@ -39,7 +40,6 @@ function takeFire(event) {
 
 function takeComputerTurn() {
   const firedAttacks = playerGrid.player.firedAttacks
-  console.log(firedAttacks)
   if (firedAttacks[0] == undefined || firedAttacks[firedAttacks.length - 1].hit == false) {
     const coordinates = playerGrid.player.receiveRandomAttack();
     playerGrid.updateDisplay(coordinates);
@@ -64,5 +64,20 @@ function gameOver() {
 }
 
 function restart() {
+  const modal = document.querySelector('.modal');
+  modal.style.display = 'none';
+  playerGrid.element.remove();
+  computerGrid.element.remove();
+  shipContainer.element.remove();
+  shipContainer = new ShipContainer();
+  document.querySelector('body').appendChild(shipContainer.element);
+  playerGrid = new Grid('player', 'player', takeFire);
+  computerGrid = new Grid('computer', 'computer', takeFire);
+  computerGrid.children.forEach((child) => child.addEventListener('click', (event) => { takeFire(event); }));
+  manageDOM.handleDrag(playerGrid);
 
+  content.appendChild(playerGrid.element);
+  content.appendChild(computerGrid.element);
+  playerGrid.loadShips();
+  computerGrid.generateAIShips();
 }

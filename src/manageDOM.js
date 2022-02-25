@@ -52,12 +52,17 @@ function handleDrag(playerGrid) {
 
   document.addEventListener('drop', function(event) {
     event.preventDefault();
-    let shipSize = dragged.dataset.size;
-    dragged.remove()
-    let startCoordinates = JSON.parse('[' + event.target.dataset.coordinates + ']') 
-    event.target.dataset.coordinates;
-    event.target.classList.toggle('dragover');
-    playerGrid.handleShipPlacement(shipSize, startCoordinates)
+    if (event.target.classList.contains('box')) {
+      let shipSize = dragged.dataset.size;
+      let startCoordinates = JSON.parse('[' + event.target.dataset.coordinates + ']') 
+      event.target.dataset.coordinates;
+      event.target.classList.toggle('dragover');
+      const succesfulPlacement = playerGrid.handleShipPlacement(shipSize, startCoordinates)
+      if (succesfulPlacement) {
+        dragged.remove()
+      }
+    } 
+    return
   })
 
 }
